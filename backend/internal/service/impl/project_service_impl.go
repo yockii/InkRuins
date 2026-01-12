@@ -15,14 +15,34 @@ func NewProjectService() *ProjectServiceImpl {
 	return &ProjectServiceImpl{}
 }
 
+// CreateProject 创建项目时自动创建一个初始故事节点
 func (s *ProjectServiceImpl) CreateProject(project *model.Project) error {
+	if project == nil {
+		return errors.New("project is required")
+	}
 	if project.Title == "" {
 		return errors.New("title is required")
 	}
 	if project.UserID == 0 {
 		return errors.New("user_id is required")
 	}
-	return database.DB.Create(project).Error
+	err := database.DB.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Create(project).Error; err != nil {
+			return err
+		}
+		if err := tx.Create(&model.StoryEvent{
+			ProjectID: project.ID,
+			Seq:       0,
+			Title:     "初始故事节点",
+		}).Error; err != nil {
+			return err
+		}
+		return nil
+	})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *ProjectServiceImpl) GetProjectByID(id uint64) (*model.Project, error) {
@@ -75,9 +95,29 @@ func (s *ProjectServiceImpl) GetProjectCount(condition *model.Project) (int64, e
 }
 
 func (s *ProjectServiceImpl) UpdateProject(project *model.Project) error {
+	if project == nil {
+		return errors.New("project is required")
+	}
 	return database.DB.Save(project).Error
 }
 
 func (s *ProjectServiceImpl) DeleteProject(id uint64) error {
-	return database.DB.Delete(&model.Project{}, id).Error
+	if id == 0 {
+		return errors.New("id is required")
+	}
+	return database.DB.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Delete(&model.Project{}, id).Error; err != nil {
+			return err
+		}
+
+		if err := tx.Where(dao.StoryEvent.ProjectID.Eq(id)).Delete(&model.StoryEvent{}).Error; err != nil {
+			return err
+		}
+
+		if err := tx.Where(dao.Character.ProjectID.Eq(id)).Delete(&model.Character{}).Error; err != nil {
+			return err
+		}
+
+		return nil
+	})
 }

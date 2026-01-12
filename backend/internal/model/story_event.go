@@ -8,13 +8,13 @@ import "gorm.io/datatypes"
 type StoryEvent struct {
 	BaseModel
 	ProjectID      uint64 `gorm:"not null;index" json:"project_id,string"`
-	Seq            int    `gorm:"not null;index" json:"seq"`               // 顺序号
-	Title          string `gorm:"size:200" json:"title"`                   // 标题
-	Summary        string `gorm:"type:text" json:"summary"`                // 场景摘要
-	PovCharacterID uint64 `gorm:"not null" json:"pov_character_id,string"` // 视角角色ID
-	Goal           string `gorm:"type:text" json:"goal"`                   // POV角色在此场景的目标
-	Conflict       string `gorm:"type:text" json:"conflict"`               // 角色冲突/阻碍
-	Outcome        string `gorm:"type:text" json:"outcome"`                // 场景结局
+	Seq            int    `gorm:"not null;index" json:"seq"`       // 顺序号
+	Title          string `gorm:"size:200" json:"title"`           // 标题
+	Summary        string `gorm:"type:text" json:"summary"`        // 场景摘要
+	PovCharacterID uint64 `gorm:"" json:"pov_character_id,string"` // 视角角色ID
+	Goal           string `gorm:"type:text" json:"goal"`           // POV角色在此场景的目标
+	Conflict       string `gorm:"type:text" json:"conflict"`       // 角色冲突/阻碍
+	Outcome        string `gorm:"type:text" json:"outcome"`        // 场景结局
 
 	IsUsed bool `gorm:"not null;index" json:"is_used"` // 是否使用过(写进章节)
 

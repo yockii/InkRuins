@@ -21,6 +21,9 @@ func NewUserService() *UserServiceImpl {
 }
 
 func (s *UserServiceImpl) CreateUser(user *model.User) error {
+	if user == nil {
+		return errors.New("user is required")
+	}
 	if user.Username == "" {
 		return errors.New("username is required")
 	}
@@ -93,10 +96,23 @@ func (s *UserServiceImpl) Logout(token string) error {
 }
 
 func (s *UserServiceImpl) UpdateUser(user *model.User) error {
+	if user == nil {
+		return errors.New("user is required")
+	}
+	if user.Password != "" {
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+		if err != nil {
+			return err
+		}
+		user.Password = string(hashedPassword)
+	}
 	return database.DB.Omit(dao.User.Password.Column().Name).Save(user).Error
 }
 
 func (s *UserServiceImpl) DeleteUser(id uint64) error {
+	if id == 0 {
+		return errors.New("id is required")
+	}
 	return database.DB.Delete(&model.User{}, id).Error
 }
 
