@@ -2,7 +2,7 @@ package service
 
 import "github.com/yockii/inkruins/internal/model"
 
-type UserService interface {
+type IUserService interface {
 	CreateUser(user *model.User) error
 	GetUserByID(id uint64) (*model.User, error)
 	GetUserByUsername(username string) (*model.User, error)

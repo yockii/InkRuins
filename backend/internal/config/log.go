@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	viper.SetDefault("log.filename", "yunjin.log")
+	viper.SetDefault("log.filename", "inkruins.log")
 	viper.SetDefault("log.maxSizeInMb", 10)
 	viper.SetDefault("log.maxAgeInDays", 30)
 	viper.SetDefault("log.maxBackups", 10)

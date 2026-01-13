@@ -88,6 +88,7 @@ func (s *UserServiceImpl) Login(username, password string) (string, *model.User,
 	}
 	cache.Set(constant.CacheKeyUserToken+token, user.ID, time.Hour*24)
 
+	user.Password = ""
 	return token, user, nil
 }
 

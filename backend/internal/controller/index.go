@@ -1,13 +1,18 @@
 package controller
 
 import (
-	"fmt"
-	"log/slog"
-
 	"github.com/gofiber/fiber/v3"
-	"github.com/yockii/inkruins/internal/cache"
-	"github.com/yockii/inkruins/internal/constant"
+	"github.com/gofiber/fiber/v3/middleware/healthcheck"
+	"github.com/gofiber/fiber/v3/middleware/helmet"
+	"github.com/gofiber/fiber/v3/middleware/idempotency"
+	recoverer "github.com/gofiber/fiber/v3/middleware/recover"
+	"github.com/gofiber/swagger/v2"
+	"github.com/spf13/viper"
 )
+
+func init() {
+	viper.SetDefault("server.swaggerEnable", false)
+}
 
 type Controller interface {
 	InitializeRouter(router fiber.Router)
@@ -15,45 +20,25 @@ type Controller interface {
 
 var controllers []Controller
 
+// @title InkRuins API
+// @version 1.0
+// @description 墨墟API文档
+// @host localhost:8080
+// @BasePath /api/v1
 func InitializeRouter(app *fiber.App) {
+	app.Get("/health", healthcheck.New())
+
+	if viper.GetBool("server.swaggerEnable") {
+		app.Get("/swagger/*", swagger.HandlerDefault)
+	}
+
+	app.Use(recoverer.New())
+	app.Use(helmet.New())
+	app.Use(idempotency.New())
+
 	router := app.Group("/api/v1")
 	// 初始化所有需要认证的controller
 	for _, c := range controllers {
 		c.InitializeRouter(router)
 	}
-}
-
-// GetUserIDFromContext 从请求上下文中获取用户ID
-// 从Authorization header中获取token，然后从Redis中获取userID
-func GetUserIDFromContext(c fiber.Ctx) (uint64, error) {
-	// 从Authorization header获取token
-	token := c.Get("Authorization")
-	if token == "" {
-		// 尝试从query参数获取
-		token = c.Query("token")
-	}
-	if token == "" {
-		// 尝试从cookie获取
-		token = c.Cookies("token")
-	}
-
-	if token == "" {
-		return 0, fmt.Errorf("未提供认证token")
-	}
-
-	// 从Redis获取userID
-	userIDStr, err := cache.Get(constant.CacheKeyUserToken + token)
-	if err != nil {
-		slog.Error("获取用户信息失败", "err", err, "token", token)
-		return 0, fmt.Errorf("无效的token")
-	}
-
-	// 转换为uint64
-	var userID uint64
-	_, err = fmt.Sscanf(userIDStr, "%d", &userID)
-	if err != nil {
-		return 0, fmt.Errorf("无效的用户ID格式")
-	}
-
-	return userID, nil
 }

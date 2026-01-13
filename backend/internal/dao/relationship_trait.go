@@ -6,7 +6,7 @@ import (
 	"gorm.io/cli/gorm/field"
 )
 
-var CharacterTrait = struct {
+var RelationshipTrait = struct {
 	ProjectID    field.Number[uint64]
 	Name         field.String
 	Description  field.String
