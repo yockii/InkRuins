@@ -5,8 +5,8 @@ import (
 	"log/slog"
 
 	"github.com/gofiber/fiber/v3"
-	"github.com/yockii/yunjin/internal/cache"
-	"github.com/yockii/yunjin/internal/constant"
+	"github.com/yockii/inkruins/internal/cache"
+	"github.com/yockii/inkruins/internal/constant"
 )
 
 type Controller interface {

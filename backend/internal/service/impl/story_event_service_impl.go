@@ -3,9 +3,9 @@ package impl
 import (
 	"errors"
 
-	"github.com/yockii/yunjin/internal/dao"
-	"github.com/yockii/yunjin/internal/database"
-	"github.com/yockii/yunjin/internal/model"
+	"github.com/yockii/inkruins/internal/dao"
+	"github.com/yockii/inkruins/internal/database"
+	"github.com/yockii/inkruins/internal/model"
 )
 
 type StoryEventServiceImpl struct {

@@ -1,6 +1,6 @@
 package service
 
-import "github.com/yockii/yunjin/internal/model"
+import "github.com/yockii/inkruins/internal/model"
 
 type ProjectService interface {
 	CreateProject(project *model.Project) error

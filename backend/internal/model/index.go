@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/yockii/yunjin/pkg/util"
+	"github.com/yockii/inkruins/pkg/util"
 	"gorm.io/gorm"
 )
 

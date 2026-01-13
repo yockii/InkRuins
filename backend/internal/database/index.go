@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/viper"
-	"github.com/yockii/yunjin/internal/model"
+	"github.com/yockii/inkruins/internal/model"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

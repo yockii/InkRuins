@@ -1,4 +1,4 @@
-module github.com/yockii/yunjin
+module github.com/yockii/inkruins
 
 go 1.25.3
 

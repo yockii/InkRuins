@@ -5,11 +5,11 @@ import (
 	"time"
 
 	gonanoid "github.com/matoous/go-nanoid/v2"
-	"github.com/yockii/yunjin/internal/cache"
-	"github.com/yockii/yunjin/internal/constant"
-	"github.com/yockii/yunjin/internal/dao"
-	"github.com/yockii/yunjin/internal/database"
-	"github.com/yockii/yunjin/internal/model"
+	"github.com/yockii/inkruins/internal/cache"
+	"github.com/yockii/inkruins/internal/constant"
+	"github.com/yockii/inkruins/internal/dao"
+	"github.com/yockii/inkruins/internal/database"
+	"github.com/yockii/inkruins/internal/model"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
