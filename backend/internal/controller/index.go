@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"log/slog"
+
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/healthcheck"
 	"github.com/gofiber/fiber/v3/middleware/helmet"
@@ -8,6 +10,7 @@ import (
 	recoverer "github.com/gofiber/fiber/v3/middleware/recover"
 	"github.com/gofiber/swagger/v2"
 	"github.com/spf13/viper"
+	"github.com/yockii/inkruins/internal/controller/docs"
 )
 
 func init() {
@@ -24,11 +27,14 @@ var controllers []Controller
 // @version 1.0
 // @description 墨墟API文档
 // @host localhost:8080
-// @BasePath /api/v1
+// @BasePath ./
+// @securityDefinitions.basic  BasicAuth
+
 func InitializeRouter(app *fiber.App) {
 	app.Get("/health", healthcheck.New())
 
 	if viper.GetBool("server.swaggerEnable") {
+		slog.Info("swagger enabled", "swagger", docs.SwaggerInfo)
 		app.Get("/swagger/*", swagger.HandlerDefault)
 	}
 

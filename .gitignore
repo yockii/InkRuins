@@ -1,0 +1,4 @@
+.vscode/
+backend/internal/controller/docs
+**/*.log
+**/*.exe

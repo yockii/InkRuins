@@ -64,6 +64,9 @@ func (s *ProjectServiceImpl) GetProjectList(condition *model.Project, page, page
 		if condition.Title != "" {
 			tx = tx.Where(dao.Project.Title.Like("%" + condition.Title + "%"))
 		}
+		if condition.UserID != 0 {
+			tx = tx.Where(dao.Project.UserID.Eq(condition.UserID))
+		}
 	}
 	if err := tx.Count(&total).Error; err != nil {
 		return nil, 0, err

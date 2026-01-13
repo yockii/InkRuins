@@ -7,9 +7,9 @@ type User struct {
 	Email    string `gorm:"index;size:255" json:"email"`
 	Password string `gorm:"size:255;not null" json:"password"` // bcrypt哈希
 
-	// OAuth信息
-	OAuthProvider string `gorm:"index;size:50" json:"oauth_provider"` // linuxdo, github, etc.
-	OAuthID       string `gorm:"index;size:255" json:"oauth_id"`
+	// OAuth信息 以后再实现，单独建表，一个用户可能绑定多个OAuth账号
+	// OAuthProvider string `gorm:"index;size:50" json:"oauth_provider"` // linuxdo, github, etc.
+	// OAuthID       string `gorm:"index;size:255" json:"oauth_id"`
 
 	// 用户信息
 	DisplayName string `gorm:"size:100" json:"display_name"`
