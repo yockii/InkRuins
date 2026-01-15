@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useRouter } from 'vue-router'
 import type { ApiResponse } from '@/types'
 
 const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1'
@@ -33,7 +34,7 @@ request.interceptors.response.use(
       switch (error.response.status) {
         case 401:
           localStorage.removeItem('token')
-          window.location.href = '/login'
+          useRouter().push('/login')
           break
         case 403:
           console.error('没有权限')
