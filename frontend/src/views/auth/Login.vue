@@ -97,7 +97,7 @@ const handleLogin = async () => {
     loading.value = true
     try {
       const response = await userApi.login(loginForm)
-      if (response.code === 200) {
+      if (response.code === 0) {
         userStore.setToken(response.data.token)
         userStore.setUser(response.data.user)
         ElMessage.success('登录成功')

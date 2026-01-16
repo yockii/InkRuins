@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useRouter } from 'vue-router'
 import type { ApiResponse } from '@/types'
 
-const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1'
+const baseURL = import.meta.env.VITE_API_BASE_URL || '/api/v1'
 
 const request = axios.create({
   baseURL,
