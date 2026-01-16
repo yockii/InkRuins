@@ -25,6 +25,6 @@ export interface CreateProjectRequest {
 
 export interface ListProjectRequest {
   page: number
-  page_size: number
+  size: number
   title?: string
 }

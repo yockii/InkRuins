@@ -35,5 +35,5 @@ export interface PaginatedResponse<T = any> {
   data: T[]
   total: number
   page: number
-  page_size: number
+  size: number
 }

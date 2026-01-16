@@ -41,7 +41,7 @@ func (c *projectController) InitializeRouter(router fiber.Router) {
 // @Failure 500 {object} domain.Response{data=nil}
 // @Router /api/v1/projects/list [get]
 func (c *projectController) GetMyProjects(ctx fiber.Ctx) error {
-	userID := fiber.Locals(ctx, constant.LocalUserID, uint64(0))
+	userID := fiber.Locals[uint64](ctx, constant.LocalUserID)
 	if userID == 0 {
 		return ctx.Status(fiber.StatusBadRequest).JSON(domain.NewErrorResponse(fiber.StatusBadRequest, "user id is required"))
 	}
@@ -77,7 +77,7 @@ func (c *projectController) GetMyProjects(ctx fiber.Ctx) error {
 // @Failure 500 {object} domain.Response{data=nil}
 // @Router /api/v1/projects/create [post]
 func (c *projectController) CreateProject(ctx fiber.Ctx) error {
-	userID := fiber.Locals(ctx, constant.LocalUserID, uint64(0))
+	userID := fiber.Locals[uint64](ctx, constant.LocalUserID)
 	if userID == 0 {
 		return ctx.Status(fiber.StatusBadRequest).JSON(domain.NewErrorResponse(fiber.StatusBadRequest, "user id is required"))
 	}
@@ -109,7 +109,7 @@ func (c *projectController) CreateProject(ctx fiber.Ctx) error {
 // @Failure 500 {object} domain.Response{data=nil}
 // @Router /api/v1/projects/instance/{id} [get]
 func (c *projectController) GetProject(ctx fiber.Ctx) error {
-	userID := fiber.Locals(ctx, constant.LocalUserID, uint64(0))
+	userID := fiber.Locals[uint64](ctx, constant.LocalUserID)
 	if userID == 0 {
 		return ctx.Status(fiber.StatusBadRequest).JSON(domain.NewErrorResponse(fiber.StatusBadRequest, "user id is required"))
 	}
@@ -140,7 +140,7 @@ func (c *projectController) GetProject(ctx fiber.Ctx) error {
 // @Failure 500 {object} domain.Response{data=nil}
 // @Router /api/v1/projects/update/{id} [put]
 func (c *projectController) UpdateProject(ctx fiber.Ctx) error {
-	userID := fiber.Locals(ctx, constant.LocalUserID, uint64(0))
+	userID := fiber.Locals[uint64](ctx, constant.LocalUserID)
 	if userID == 0 {
 		return ctx.Status(fiber.StatusBadRequest).JSON(domain.NewErrorResponse(fiber.StatusBadRequest, "user id is required"))
 	}
@@ -179,7 +179,7 @@ func (c *projectController) UpdateProject(ctx fiber.Ctx) error {
 // @Failure 500 {object} domain.Response{data=nil}
 // @Router /api/v1/projects/delete/{id} [delete]
 func (c *projectController) DeleteProject(ctx fiber.Ctx) error {
-	userID := fiber.Locals(ctx, constant.LocalUserID, uint64(0))
+	userID := fiber.Locals[uint64](ctx, constant.LocalUserID)
 	if userID == 0 {
 		return ctx.Status(fiber.StatusBadRequest).JSON(domain.NewErrorResponse(fiber.StatusBadRequest, "user id is required"))
 	}

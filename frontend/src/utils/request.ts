@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useRouter } from 'vue-router'
-import type { ApiResponse } from '@/types'
+// import type { ApiResponse } from '@/types'
 
 const baseURL = import.meta.env.VITE_API_BASE_URL || '/api/v1'
 
